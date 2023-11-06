@@ -1,6 +1,6 @@
 import express from "express";
 import getDb from "../db.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const router = express.Router();
@@ -9,7 +9,7 @@ router.post("/register", async (req, res) => {
     const db = getDb();
     const users = db.collection("users");
 
-    const encryptedPassword = await bcrypt.hash(req.body.password, 10);  
+    const encryptedPassword = await bcrypt.hash(req.body.password, 10);
 
     await users.insertOne({
         password: encryptedPassword,
@@ -43,7 +43,18 @@ router.post("/login", async (req, res) => {
         });
     }
 
-    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    let tokenExpiry = Date.now()/1000 + 24 * 60 * 60; //expires one day from creation
+
+    if(req.body.longterm){
+        tokenExpiry = Date.now()/1000 + 30 * 24 * 60 * 60; //expires one month from creation
+    }
+
+    const accessToken = jwt.sign({
+        id: user._id,
+        exp: tokenExpiry,
+        usr: user.username
+    },
+        process.env.JWT_SECRET);
 
     res.status(200).json({ accessToken, userType: user.userType });
 
