@@ -10,17 +10,24 @@ router.post("/register", async (req, res) => {
     const users = db.collection("users");
 
     const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+    try{
+        const result = await users.insertOne({
+            password: encryptedPassword,
+            username: req.body.username,
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            userType: req.body.userType
+        });
+        console.log(`Result is ${result.acknowledged}`)
+        res.status(200).json({ message: "Registered successfully" });
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({message: "Email or username duplicate"});
+    }
 
-    await users.insertOne({
-        password: encryptedPassword,
-        username: req.body.username,
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        userType: req.body.userType
-    });
-
-    res.status(200).json({ message: "Registered successfully" });
+    
 });
 
 router.post("/login", async (req, res) => {
