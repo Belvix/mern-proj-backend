@@ -1,8 +1,6 @@
 import { expressjwt } from "express-jwt";
-import getDb from "../db";
+import getDb from "../db.js";
 import { ObjectId } from "mongodb";
-import jwt from "jsonwebtoken";
-import { NextFunction, Response } from "express";
 
 //Use in protected routes to validate the token
 const requestModifier = async (req, res, next) => {
@@ -13,6 +11,7 @@ const requestModifier = async (req, res, next) => {
         req.user = await users.findOne({
             _id: req.auth.id,
         });
+        req.auth.isArtist = req.user.userType == "artist";
         console.log("req.user", req.user, req.auth.id);
     }
 

@@ -3,6 +3,7 @@ import express from "express";
 import { connectToServer } from "./db.js";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
+import songRouter from "./routes/songs.js";
 import cors from 'cors';
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(cors()); // Enable CORS
 // Define your routes here (e.g., authRouter)
 app.use("/auth", authRouter);
 app.use("/user",userRouter);
+app.use("/song",songRouter);
 
 app.use((err, req, res, next) => {
     res.status(500).json({ message: err.message });
@@ -28,6 +30,7 @@ app.use((err, req, res, next) => {
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
+
 
 connectToServer().then(async () => {
     app.listen(port, () => {
