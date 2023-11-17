@@ -25,11 +25,9 @@ router.post("/usernames", async (req, res) => {
     try {
         const db = getDb();
 
-        /**@type {Collection} */
         const users = db.collection("users");
 
         const fields = await users.find({ username: req.body.username }).toArray();
-        console.log(fields);
         res.json(fields); 
     } catch (error) {
         console.error(error);
