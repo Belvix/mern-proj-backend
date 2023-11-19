@@ -15,7 +15,7 @@ const port = 2900;
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 app.use(cors({
-    origin: 'https://rhythmix-mern.vercel.app',
+    origin: ['http://localhost:3000','https://rhythmix-mern.vercel.app'],
     allowedHeaders: '*',
 })); // Enable CORS
 
@@ -29,7 +29,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Rhythmix backend is running! v1.2.0");
+    res.send("Rhythmix backend is running! v1.3.0");
 });
 
 
