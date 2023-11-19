@@ -8,8 +8,6 @@ import cors from 'cors';
 
 dotenv.config();
 
-console.log(process.env.DB_NAME);
-
 const app = express();
 const port = 2900;
 

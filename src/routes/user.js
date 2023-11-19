@@ -14,7 +14,6 @@ router.post("/email", async (req, res) => {
         const users = db.collection("users");
 
         const fields = await users.find({ email: req.body.email }).toArray();
-        console.log(fields);
 
         res.json(fields); 
     } catch (error) {
