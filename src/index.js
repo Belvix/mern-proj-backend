@@ -14,7 +14,9 @@ const port = 2900;
 // Common middlewares
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
-app.use(cors()); // Enable CORS
+app.use(cors({
+    origin: '*',
+})); // Enable CORS
 
 // Define your routes here (e.g., authRouter)
 app.use("/auth", authRouter);
