@@ -40,6 +40,13 @@ router.post("/login", async (req, res) => {
         email: req.body.email,
     });
 
+    if (user === null) {
+        return res.status(401).json({
+            accessToken: null,
+            message: "User not found",
+        });
+    }
+
     const passwordValid = await bcrypt.compare(
         req.body.password,
         user.password
@@ -51,6 +58,7 @@ router.post("/login", async (req, res) => {
             message: "Username or password is incorrect",
         });
     }
+
 
     let tokenExpiry = Date.now()/1000 + 24 * 60 * 60; //expires one day from creation
 

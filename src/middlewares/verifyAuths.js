@@ -12,7 +12,7 @@ const requestModifier = async (req, res, next) => {
             _id: req.auth.id,
         });
         req.auth.isArtist = req.user.userType == "artist";
-        console.log("req.user", req.user, req.auth.id);
+        // console.log("req.user", req.user, req.auth.id);
     }
 
     next();
