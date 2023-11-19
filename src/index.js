@@ -15,7 +15,8 @@ const port = 2900;
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 app.use(cors({
-    origin: '*',
+    origin: 'https://rhythmix-mern.vercel.app',
+    allowedHeaders: '*',
 })); // Enable CORS
 
 // Define your routes here (e.g., authRouter)
