@@ -72,6 +72,16 @@ router.patch(
     })
 );
 
+router.get('/:id/details',
+    expressAsyncHandler(async (req, res) => {
+        const db = getDb();
+        const collection = db.collection("users");
+        const id = new ObjectId(req.params.id);
+        const user = await collection.findOne({ _id: id });
+        console.log(user.uploadSongs);
+        res.status(200).send({ name: user.firstName +" "+user.lastName, username: user.username, email: user.email });
+    }))
+
 router.delete('/delete/:id',
     verifyAuth(),
     expressAsyncHandler(async (req, res) => {

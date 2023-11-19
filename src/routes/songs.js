@@ -112,7 +112,6 @@ router.get('/:id/download',
 
 router.get('/:id/details',
     expressAsyncHandler(async (req, res) => {
-        const bucket = getBucket();
         const db = getDb();
         const songCollection = db.collection("songs");
         const id = new ObjectId(req.params.id);
