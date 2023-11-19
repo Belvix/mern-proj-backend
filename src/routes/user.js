@@ -42,31 +42,35 @@ router.patch(
     verifyAuth(),
     expressAsyncHandler(async (req, res) => {
         const db = getDb();
-        const collection = db.collection('songs');
         const userCollection = db.collection('users');
-        const songId = new ObjectId(req.params.id);
+        const userId = new ObjectId(req.params.id);
 
-        const existingSong = await collection.findOne({ songstorage_id: songId, userId: req.auth.id });
-        if (!existingSong) {
+        console.log("update called");
+        const existingUser = await userCollection.findOne({ _id: userId});
+        if (!existingUser) {
             res.status(401).json({ message: 'Unauthorized access' });
             return;
         }
 
-        if (!existingSong || req.auth.id.toString() != existingSong.userId.toString()) {
-            res.status(403).send({ message: "Unauthorized to delete the song" });
+        if (!existingUser || req.auth.id.toString() != existingUser._id.toString()) {
+            res.status(403).send({ message: "Unauthorized to update the user" });
             return;
         }
 
         const updateFields = {
-            title: req.body.title,
-            thumbnail: req.body.thumbnail,
-            publisher: req.body.publisher,
-            composer: req.body.composer,
-            producer: req.body.producer,
-            proddate: req.body.proddate,
+            username: req.body.username,
+            profilePic: req.body.profilePic,
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            nationality: req.body.nationality,
+            contactNo: req.body.contactNo,
+            bio: req.body.bio
         };
-
-        const result = await collection.updateOne({ songstorage_id: songId }, { $set: updateFields });
+        console.log("reached here1");
+        const result = await userCollection.updateOne({ _id: userId }, { $set: updateFields });
+        console.log("reached here2");
+        console.log(result);
 
         res.status(200).json({ message: "Song updated successfully!" });
     })
@@ -79,7 +83,17 @@ router.get('/:id/details',
         const id = new ObjectId(req.params.id);
         const user = await collection.findOne({ _id: id });
         console.log(user.uploadSongs);
-        res.status(200).send({ name: user.firstName +" "+user.lastName, username: user.username, email: user.email });
+        res.status(200).send({ 
+            name: user.firstName +" "+user.lastName, 
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username, 
+            email: user.email,
+            bio: user.bio,
+            contactNo: user.contactNo,
+            nationality: user.nationality,
+            profilePic: user.profilePic
+             });
     }))
 
 router.delete('/delete/:id',

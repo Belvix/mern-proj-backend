@@ -135,7 +135,7 @@ router.patch(
         }
 
         if (!existingSong || req.auth.id.toString() != existingSong.userId.toString()) {
-            res.status(403).send({ message: "Unauthorized to delete the song" });
+            res.status(403).send({ message: "Unauthorized to update the song" });
             return;
         }
 

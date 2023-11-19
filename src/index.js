@@ -29,7 +29,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Rhythmix backend is running! v1.4.0");
+    res.send("Rhythmix backend is running! v1.5.0");
 });
 
 
