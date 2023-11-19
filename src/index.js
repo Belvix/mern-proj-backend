@@ -34,6 +34,6 @@ app.get("/", (req, res) => {
 
 connectToServer().then(async () => {
     app.listen(port, () => {
-        return console.log(`Express is listening at http://localhost:${port}`);
+        return console.log(`Express is listening at port: ${port}`);
     });
 });
