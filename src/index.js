@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("Rhythmix backend is running!");
 });
 
 
