@@ -45,7 +45,6 @@ router.patch(
         const userCollection = db.collection('users');
         const userId = new ObjectId(req.params.id);
 
-        console.log("update called");
         const existingUser = await userCollection.findOne({ _id: userId});
         if (!existingUser) {
             res.status(401).json({ message: 'Unauthorized access' });
@@ -67,12 +66,9 @@ router.patch(
             contactNo: req.body.contactNo,
             bio: req.body.bio
         };
-        console.log("reached here1");
         const result = await userCollection.updateOne({ _id: userId }, { $set: updateFields });
-        console.log("reached here2");
-        console.log(result);
 
-        res.status(200).json({ message: "Song updated successfully!" });
+        res.status(200).json({ message: "User updated successfully!" });
     })
 );
 
@@ -82,7 +78,6 @@ router.get('/:id/details',
         const collection = db.collection("users");
         const id = new ObjectId(req.params.id);
         const user = await collection.findOne({ _id: id });
-        console.log(user.uploadSongs);
         res.status(200).send({ 
             name: user.firstName +" "+user.lastName, 
             firstName: user.firstName,
