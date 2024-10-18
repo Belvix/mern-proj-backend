@@ -15,7 +15,7 @@ const port = 2900;
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 app.use(cors({
-    origin: ['http://localhost:3000','https://rhythmix-mern.vercel.app'],
+    origin: ['http://localhost:3000','https://rhythmix-mern.vercel.app','https://rhythmixfrontend-belvixs-projects.vercel.app'],
     allowedHeaders: '*',
 })); // Enable CORS
 
